@@ -12,14 +12,14 @@ import java.io.File;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private VideoView mVideoView;
+    private FullScreenVideoView mVideoView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        mVideoView = (VideoView) findViewById(R.id.vv_play);
+        mVideoView = (FullScreenVideoView) findViewById(R.id.vv_play);
 
         mVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + File.separator + R.raw.splash));
 
