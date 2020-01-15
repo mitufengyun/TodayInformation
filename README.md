@@ -4,7 +4,7 @@
 
 #### 1、视频全屏播放，VideoView全屏显示bug解决
 
-<img src="images/01_videoview_fullscreen_bug.gif" alt="全屏播放bug"  />
+<div align=center><img src="images/01_videoview_fullscreen_bug.gif" alt="全屏播放bug"/></div>
 
 VideoView的全屏问题：VideoView会根据视频文件的大小来改变自身的大小，所以要通过自定义的方式解决。
 
