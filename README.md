@@ -55,3 +55,89 @@ public class FullScreenVideoView extends VideoView {
 ```
 
 xml里面的控件属性，避免重复编写代码，可以采取将相同属性的代码抽取为样式，进行复用。具体做法为，在属性处右键Refacter--->Extract--->Style
+
+------
+
+自定义注解的牛刀小试，看了Butterknife的注解BindView，尝试通过自定义注解的方式，添加setContentView(@LayoutRes int layoutResID) 中的参数
+
+```java
+@Retention(RUNTIME) @Target(FIELD)
+public @interface BindView {
+  /** View ID to which the field will be bound. */
+  @IdRes int value();
+}
+
+```
+
+先创建一个基类BaseActivity，抽取相同部分功能，子类继承。
+
+```java
+public class BaseActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ViewInject annotation = this.getClass().getAnnotation(ViewInject.class);
+        if (annotation != null) {
+            int layoutId = annotation.layoutId();
+            if (layoutId > 0) {
+                setContentView(layoutId);
+                ButterKnife.bind(this);
+            } else {
+                throw new RuntimeException(" layoutId < 0 ");
+            }
+        } else {
+            throw new NullPointerException(" annotation is null ");
+        }
+
+    }
+}
+
+```
+
+自定义注解
+
+```java
+@Retention(RUNTIME)// 运行时起作用
+@Target(TYPE) // 类、接口注解
+public @interface ViewInject {
+    int layoutId() default -1;
+}
+```
+
+需要继承基类BaseActivity的setContentView()方法，只需要添加注解即可实现。
+
+```java
+@ViewInject(layoutId = R.layout.activity_main)
+public class MainActivity extends BaseActivity {
+
+    @BindView(R.id.fl_main_bottom)
+    FrameLayout flMainBottom;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+}
+```
+
+
+
+mvp改造：中介者设计模式
+
+4个角色
+
+第一个角色：抽象中介者->MvpPresenter(定义接口)
+
+第二个角色：具体中介者->具体功能模块(例如：LoginPresenter等)
+
+第三个角色：抽象同事
+
+- M层：MvpModel
+- V层：MvpView
+
+第四个角色：具体同事
+
+- M层：例如->LoginModel...
+- V层：例如->MainActivity...
+

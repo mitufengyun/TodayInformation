@@ -5,8 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.todayinformation.FullScreenVideoView
+    <com.example.todayinformation.splash.FullScreenVideoView
         android:id="@+id/vv_play"
         style="@style/video_view_style" />
+
+    <TextView
+        android:id="@+id/tv_splash_timer"
+        android:onClick="jump"
+        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginRight="@dimen/dp_50"
+        android:layout_marginEnd="@dimen/dp_50"
+        android:layout_width="@dimen/dp_90"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_splash"
+        android:text="@string/jump"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/color_ffffff"
+        android:layout_gravity="right"
+        android:gravity="center"
+        />
 
 </FrameLayout>
